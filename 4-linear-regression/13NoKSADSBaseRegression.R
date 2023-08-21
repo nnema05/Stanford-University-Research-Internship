@@ -3,7 +3,7 @@
   ## Follows work of study "Differentiated nomological networks of internalizing, externalizing, and the general factor of psychopathology (' p factor') in emerging adolescence in the ABCD study"
 ## This program creates a final phenotype (predictor variables) file for non KSDAS information 
 ## Then a linear regression model is run between these phenotypes and BASELINE p-factor and all 5 factor scores
-## The resulting p-value is added to a final result file 
+## The resulting p-value is added to a result file 
 
 
 #####STEP 0: LIBRARIES 

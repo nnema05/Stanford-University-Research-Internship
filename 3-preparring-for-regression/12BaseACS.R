@@ -1,6 +1,6 @@
 
 ### BASELINE DATA OF American Community survey (ACS) data
-## ACS ACS is a nationwide survey that collects and produces information on social, economic, housing, and demographic characteristics about our nation's population every year.
+## ACS is a nationwide survey that collects and produces information on social, economic, housing, and demographic characteristics about our nation's population every year.
 ## This program is reading in ACS data from ABCD dataset
 ## This data is used to create a final data set of this information organized in a meaningful way
 ## This is being done for ACS scores from BASELINE!
