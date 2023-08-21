@@ -6,21 +6,14 @@ Interning under Stanford University Professor of Behavioral Sciences, Dr. Kaustu
 **1-reading-in-data**
 These programs reads in and cleans up the Child Behavior Checklist data from the ABCD data set, that each subject in the ABCD study completes  
 
-
 **2-confirmatory-factor-analysis**
 -The following programs in this folder complete Confirmatory Factor Analysis on the Child Behavior Checklist data  
-
 -A study called "Delineating and validating higher-order dimensions of psychopathology in the ABCD study" created a 5 factor dimensional structure of pyschopathology for us  
-
 -We wanted to first test and verify this factor structure for our set of observed variables in the ABCD data set actually exists  
-
 -This led to the use LONGITUDNAL CONFIRMATORY FACTOR ANALYSIS (CFA)  
-
 -For this, we ran a longitudinal CFA with an error structure, and four different models: configural, metric, scalar, and residual  
-
 -We then figured out which model of CFA the best fit best based on conventional fit thresholds like CFI, TLI, RMSEA  
  - Configural was the best fit  
-
 We used the CFA factor scores from the configural model and found the difference between these scores
  - difference between baseline scores and one year scores for each factor and p-factor
  - difference between baseline scores and two year scores for each factor and p-factor
