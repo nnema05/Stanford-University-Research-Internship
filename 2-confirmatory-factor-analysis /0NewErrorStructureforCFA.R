@@ -1,12 +1,7 @@
 
 # ERROR STRUCTURE FOR LONGITUDNAL CONFIRMATORY FACTOR ANALYSIS
-# A study called "Delineating and validating higher-order dimensions of psychopathology in the ABCD study" created a 5 factor structure of pyschopathology for us
-# We want to test and verify this factor structure for our set of observed variables actually exists 
-# This led to the use LONGITUDNAL CONFIRMATORY FACTOR ANALYSIS (CFA)
-# For this ran a longitudinal CFA with an error structure, and four different models: configural, metric, scalar, and residual
 
 # The below program this is running an error structure for longitudinal CFA
-  # 
 
 ####STEP 0: INSTALL LIBRARIES 
 library(sqldf)
