@@ -1,0 +1,228 @@
+#Sample ABCD - Goal #1
+
+#####STEP 1: OPEN DATA
+install.packages(tidyverse)
+library(tidyverse)
+install.packages(tidyverse)
+library(psych)
+install.packages(GPArotation)
+library(GPArotation)
+install.packages(writexl)
+library(writexl)
+
+cbcl_nm <- read.delim(file.choose())
+#Remove comment if need to debug 
+#View(cbcl_nm)
+#head(cbcl_nm)
+#ncol(cbcl_nm) #119, (1:4 and 119 should not be changed to numeric)
+#str(cbcl_nm)
+
+#####STEP 2: DELETE “Drinks alcohol without parents' approval”, “Sexual problems”, “Smokes, chews, or sniffs tobacco”, “Truancy, skips school”, “Uses drugs for non-medical purposes (don't include alcohol or tobacco)”.
+cbcl_nm <- subset(cbcl_nm, select = -c(cbcl_q02_p, cbcl_q73_p,
+                                       cbcl_q99_p, cbcl_q101_p, 
+                                       cbcl_q105_p))
+
+#####STEP 3. AGGREGATE NEEDED ITEMS INTO COMPOSITES
+
+#removes first row to start making everything numeric
+cbcl_nm <- cbcl_nm[2:29685,] 
+
+##CONVERT character columns to numeric
+#count number of columns 
+ncol(cbcl_nm)
+
+#Columns that must be numeric are 5:118 so those will become their own data.frame
+columns.to.numeric <- c(5:118)
+#view(columns.to.numeric)
+
+#changes 5:118 (columns.to.numeric) to numeric data but keeps everything else as characters 
+cbcl_nm[ , columns.to.numeric] <- apply(cbcl_nm[ ,columns.to.numeric], 2,
+                                            function(x) as.numeric(as.character(x))) 
+#Remove comment below code if there is a need to troubleshoot 
+#head(cbcl_nm)
+#str(columns.to.numeric) #check what type of data
+#str(cbcl_nm) # should have both characters and numeric data
+
+
+##CREATE composites 
+
+#Attacks/threatens (“Physically attacks people”, “Threatens people”)
+cbcl_nm$`Attacks/threatens` <- rowMeans(cbcl_nm[,c("cbcl_q57_p", "cbcl_q97_p")],
+                                           na.rm = TRUE)
+#view(cbcl_nm$`Attacks/threatens`)
+
+#Destroys (“Destroys his/her own things”, “Destroys things belonging to his/her family or others”, “Vandalism”)
+cbcl_nm$Destroys <- rowMeans(cbcl_nm[,c("cbcl_q20_p", "cbcl_q21_p", "cbcl_q106_p")],
+                                             na.rm = TRUE)
+#Disobeys rules (“Disobedient at home”, “Disobedient at school”, “Breaks rules at home, school or elsewhere”)
+cbcl_nm$`Disobeys rules` <- rowMeans(cbcl_nm[,c("cbcl_q22_p", "cbcl_q23_p", "cbcl_q28_p")],
+                                  na.rm = TRUE)
+#Steals (“Steals at home”, “Steals outside the home”)
+cbcl_nm$Steals <- rowMeans(cbcl_nm[,c("cbcl_q81_p", "cbcl_q82_p")],
+                                          na.rm = TRUE)
+# Peer problems (“Doesn't get along with other kids”, “Not liked by other kids”)
+cbcl_nm$`Peer problems` <- rowMeans(cbcl_nm[,c("cbcl_q25_p", "cbcl_q48_p")],
+                                          na.rm = TRUE)
+#Distracted/Hyperactive (“Can't concentrate, can't pay attention for long”, “Inattentive or easily distracted”, “Can't sit still, restless, or hyperactive”)
+cbcl_nm$`Distracted/Hyperactive` <- rowMeans(cbcl_nm[,c("cbcl_q08_p", "cbcl_q78_p", "cbcl_q10_p")],
+                                         na.rm = TRUE)
+#Hallucinations (“Hears sound or voices that aren't there”, “Sees things that aren't there”)
+cbcl_nm$Hallucinations <- rowMeans(cbcl_nm[,c("cbcl_q40_p", "cbcl_q70_p")],
+                                                  na.rm = TRUE)
+#Sex play (“Plays with own sex parts in public”, “Plays with own sex parts too much”)
+cbcl_nm$`Sex play` <- rowMeans(cbcl_nm[,c("cbcl_q59_p", "cbcl_q60_p")],
+                                        na.rm = TRUE)
+#Weight problems (“Overeating”, “Overweight”)
+cbcl_nm$`Weight problems` <- rowMeans(cbcl_nm[,c("cbcl_q53_p", "cbcl_q55_p")],
+                                    na.rm = TRUE)
+#Remove Comment below code if there is a need to troubleshoot 
+#ncol(cbcl_nm) #Check number of columns: 128  
+
+##REMOVE the extra columns which were aggregated to composites 
+cbcl_nm <- subset(cbcl_nm, select = -c(cbcl_q57_p, cbcl_q97_p)) #attacks/threatens
+cbcl_nm <- subset(cbcl_nm, select = -c(cbcl_q20_p)) #destroys
+cbcl_nm <- subset(cbcl_nm, select = -c(cbcl_q21_p, cbcl_q106_p)) #destroys
+cbcl_nm <- subset(cbcl_nm, select = -c(cbcl_q22_p, cbcl_q23_p, cbcl_q28_p)) #Disobeys
+cbcl_nm <- subset(cbcl_nm, select = -c(cbcl_q81_p, cbcl_q82_p)) #steals 
+cbcl_nm <- subset(cbcl_nm, select = -c(cbcl_q25_p, cbcl_q48_p)) #peer problems
+cbcl_nm <- subset(cbcl_nm, select = -c(cbcl_q08_p, cbcl_q78_p, cbcl_q10_p)) #Distracted/Hyperactive
+cbcl_nm <- subset(cbcl_nm, select = -c(cbcl_q40_p, cbcl_q70_p)) #Hallucinations
+cbcl_nm <- subset(cbcl_nm, select = -c(cbcl_q59_p, cbcl_q60_p)) #Sex play 
+cbcl_nm <- subset(cbcl_nm, select = -c(cbcl_q53_p, cbcl_q55_p)) #Weight problems 
+
+setwd("/Users/nandininema/Downloads/Sample ABCD Work")
+write_xlsx(cbcl_nm, "cbcl_nm_final.xlsx")
+
+
+#Remove Comment below code if there is a need to troubleshoot
+#ncol(cbcl_nm)
+#Check # of columns: 107 - 5(subject key, interview age, sex, language, event name) = 102 
+
+
+#####STEP 4. SEPERATE INTO DIFFERENT TIMELINES (baseline_year_1_arm_1 , 1_year_follow_up_y_arm_1, 2_year_follow_up_y_arm_1 )
+
+#baseline_year_1_arm_1
+baselineData <- cbcl_nm %>% 
+  filter(eventname == "baseline_year_1_arm_1")
+ncol(baselineData)
+view(baselineData)
+
+# 1_year_follow_up_y_arm_1
+oneyearData <- cbcl_nm %>% 
+  filter(eventname == "1_year_follow_up_y_arm_1")
+
+#2_year_follow_up_y_arm_1
+twoyearData <- cbcl_nm %>% 
+  filter(eventname == "2_year_follow_up_y_arm_1")
+
+
+#####STEP 5. PARALLEL ANALYSIS, PCA AND EFA IN BASELINE
+
+####STEP 5a. PARALLEL ANALYSIS IN BASELINE
+#To run, data must be numeric. Out of 107 columns, 5:97, 99:107 are the numeric columns 
+#Remove the columns that are not numeric 
+baselineDataNumeric <- select(baselineData, c(5:97, 99:107)) 
+
+#Remove Comment below code if there is a need to troubleshoot
+#str(baselineDataNumeric) 
+#head(baselineDataNumeric)
+#view(baselineDataNumeric) 
+
+##Run parallel analysis  
+#Use fa = pc because the article recommends finding principal components (pc) instead of principal factors (fa) 
+baselineParallel <- fa.parallel(baselineDataNumeric, fa = "pc") 
+
+
+
+####STEP 5b PCA (delineating paper stated to empirically extract with PCA) IN BASELINE
+baselinePca <- princomp(baselineDataNumeric) 
+
+#Assumption: parallel analysis gave me 16 factors, PCA gave me 5 based on delineating paper 
+
+
+####STEP 5c: EFA FOR EACH FACTOR, EXTRACT AND ROTATE  IN BASELINE
+
+#FIRST FACTOR
+#Use fm = ml or maximum likelihood because this is the correct factor analysis for normally distributed data
+baselineFa1 <- fa(r = baselineDataNumeric, 
+                    nfactors = 1, 
+                    fm = "ml",
+                    residuals = TRUE) 
+
+#evaluate loadings (need to be presence of >3 clear primary loading, greater then .1 for each factor)
+#save scores for each successive number of components 
+baselineFa1Scores <- baselineFa1$scores
+
+#TWO FACTORS (now rotate with geominT)
+#Rotate with geomin as stated in Delineating paper
+#Use geominT instead of geominQ because geominT is orthogonal and the Goldberg method uses orthoganol rotations
+baseline.fa.2 <- fa(r = baselineDataNumeric,
+                    nfactors = 2,
+                    fm = "ml",
+                    rotate = "geominT",
+                    residuals = TRUE) 
+baselinefa2Scores <- baseline.fa.2$scores
+
+#THREE FACTORS 
+baseline.fa.3 <- fa(r = baselineDataNumeric,
+                    nfactors = 3,
+                    fm = "ml",
+                    rotate = "geominT",
+                    residuals = TRUE)
+baselinefa3Scores <- baseline.fa.3$scores
+
+#FOUR FACTORS 
+baseline.fa.4 <- fa(r = baselineDataNumeric,
+                    nfactors = 4,
+                    fm = "ml",
+                    rotate = "geominT",
+                    residuals = TRUE)
+baselinefa4Scores <- baseline.fa.4$scores
+
+#FIVE FACTORS
+baseline.fa.5 <- fa(r = baselineDataNumeric,
+                    nfactors = 5,
+                    fm = "ml",
+                    rotate = "geominT",
+                    residuals = TRUE)
+baselinefa5scores <- baseline.fa.5$scores
+
+#SIX FACTORS  
+baseline.fa.6 <- fa(r = baselineDataNumeric,
+                    nfactors = 6,
+                    fm = "ml",
+                    rotate = "geominT",
+                    residuals = TRUE)
+baselinefa6Scores <- baseline.fa.6$scores
+#Assumption that at 6 factors and beyond it is no longer interpretable
+
+#Names of 5 factors based on loadings: 
+
+
+
+#####STEP 6: CORRELATION ANALYSIS IN BASELINE
+#correlation between factor scores starting from the first factor at the top all the way to the last factor
+
+#1 and 2 scores 
+baseline.cor.1_2 <- cor.test(baselineFa1.scores, baseline.fa.2.scores, 
+                             method = "pearson")
+#correlation coefficient or r: 
+#p-value:
+
+#2 and 3 scores
+baseline.cor.2_3 <- cor.test(baseline.fa.2.scores, baseline.fa.3.scores,
+                             method = "pearson")
+#correlation coefficient or r: 
+#p-value:
+
+#3 and 4 scores
+baseline.cor.3_4 <- cor.test(baseline.fa.3.scores, baseline.fa.4.scores, 
+                             method = "pearson")
+#correlation coefficient or r: 
+#p-value:
+
+#4 and 5 scores 
+baseline.cor.4_5 <- cor.test(baseline.fa.4.scores, baseline.fa.5.scores, 
+                             method = "pearson")
+#correlation coefficient or r: 
+#p-value:
