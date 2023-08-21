@@ -1,1 +1,3 @@
-# Stanford-University-Research-Internship
+# Stanford University Research Internship
+
+Interning under Stanford University Professor of Behavioral Sciences, Dr. Kaustubh Supekar, I undertook a study  whose goal was understand development of mental health disorders by attempting to both examine and predict it. Specifically, we worked to see how children from ages 9-12 and their symptoms of mental disorders change over time and if this change can be predicted by a number of variables. These predictors include demographics, psychopathology, temperament, family history of substance use and psychopathology, school and family environment, and cognitive ability, using instruments based on youth-, parent-, and teacher-report, and behavioral task performance. 
