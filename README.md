@@ -34,6 +34,6 @@ Kiddie Schedule for Affective Disorders and Schizophrenia), family history with 
 -The resulting p-value to show the association between the phenotypes and factor scores is added to result files  
 
 
-**5-linear-regression**  
+**5-results**  
 -The programs in this folder put all the p-values in two easily readable csv's, one for the difference in one year and baseline data and one for the difference of two year and baseline data  
 
