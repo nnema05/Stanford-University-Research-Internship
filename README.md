@@ -28,9 +28,9 @@ Kiddie Schedule for Affective Disorders and Schizophrenia), family history with 
 
 **4-linear-regression**  
 -The programs in this folder perform linear regression for
- -  the pheontypes and baseline data for all of the factor scores
- -  the pheontypes and the difference of one year and baseline data for all of the factor scores
- - the pheontypes and the difference of two year and baseline data for all of the factor scores  
+ -  the phenotypes and baseline data for all of the factor scores
+ -  the phenotypes and the difference of one year and baseline data for all of the factor scores
+ - the phenotypes and the difference of two year and baseline data for all of the factor scores  
 -The resulting p-value to show the association between the phenotypes and factor scores is added to result files  
 
 
